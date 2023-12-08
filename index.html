@@ -1,47 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                background-color: #f0f0f0;
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            }
-            
-            .spinner-container {
-                perspective: 1000px;
-            }
-            
-            .spinner {
-                width: 309px;
-                height: 100px;
-                margin: auto;
-                background-color: #fff;
-                background-image: url('images/logo_transparent.png'); 
-                background-size: cover;
-                background-repeat: no-repeat;
-                animation: spin 3s linear infinite;
-                transform-style: preserve-3d;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-                25% { transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg); }
-                50% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-                75% { transform: rotateX(0deg) rotateY(-180deg) rotateZ(0deg); }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="spinner-container">
-            <h1>No one visits this page, so here's a spinny thing.</h1>
-            <div class="spinner"></div>
-        </div>
-    </body>
+<html>
+<head>
+    <title>Bring A Plate - Idle Time</title>
+    <style>
+        canvas { background: #efefef; display: block; margin: 20px auto; border: 1px solid #ccc; border-radius: 5px;}
+        body, html {
+            height: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 400;
+            text-align: center;
+        }        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Bring A Plate</h1>
+        <p>The website never really got any traffic, so here's something to pass the time for you.</p>
+        <canvas id="gameCanvas" width="960" height="640"></canvas>
+    </div>
+    <script src="scripts/game.js"></script>
+</body>
 </html>
