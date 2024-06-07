@@ -4,38 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap Buttons</title>
-    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/e3e5df0a2c.js" crossorigin="anonymous"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-fill-flex {
+            display: flex;
+            align-items:center;
+            justify-content:space-between;
+            <!-- height: 100px; /* Adjust height as needed */ -->
+        }
+        .btn-lg {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <div class="row">
-            <!-- First Column -->
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment G01</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 101</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 103</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 105 </button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 201</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 203</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 204</button>
+            <div class="col-md-12 col-sm-12" >
+                <h1>Welcome to 10 First Ave</h1>            
             </div>
-            <!-- Second Column -->
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment G01</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 102</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 104</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 106</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 202</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 203</button>
-                <button type="button" class="btn btn-primary btn-block mb-2">Apartment 204</button>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12" >
+                <h4>Tap on a <i class="fa-solid fa-bell"></i> to connect with the apartment</h4>
+            </div>
+        </div>
+        <div class="row">
+            <!-- First Column -->
+            <div class="col-md-6 col-sm-12" >
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" >Apartment G01<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment G02<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 101<i class="fa-solid fa-bell-slash"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 102<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 103<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 104<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 105<i class="fa-solid fa-bell-slash"></i> </button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 106<i class="fa-solid fa-bell-slash"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 107<i class="fa-solid fa-bell-slash"></i> </button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 108<i class="fa-solid fa-bell-slash"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 201<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 202<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 203<i class="fa-solid fa-bell-slash"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 204<i class="fa-solid fa-bell"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()" disabled>Apartment 205<i class="fa-solid fa-bell-slash"></i></button>
+                <button type="button" class="btn btn-primary btn-lg btn-fill-flex" onclick="playChime()">Apartment 206<i class="fa-solid fa-bell"></i></button>
             </div>
         </div>
     </div>
+
+        <!-- Door chime audio -->
+        <audio id="doorChime" src="door_chime.mp3" preload="auto"></audio>
+
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+
+    <!-- JavaScript to play the door chime -->
+    <script>
+        function playChime() {
+            const chime = document.getElementById('doorChime');
+            chime.currentTime = 0; // Reset to start
+            chime.play();
+            chime.onended = function() {
+                window.location.href = 'door_chime.html'; // Replace with your desired URL
+            };            
+        }
+    </script>
+
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Contacted</title>
+    <script src="https://kit.fontawesome.com/e3e5df0a2c.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .btn-door-chime {
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+        }
+        .chime-icon {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chime-icon">The Apartment Has Been Notified and a chat will commence once they answer.</div>
+        <button type="button" class="btn btn-primary btn-door-chime" onclick="playChime()">Ring Door Chime Again <i class="fa-solid fa-bell"></i></button>
+    </div>
+
+    <!-- Door chime audio -->
+    <audio id="doorChime" src="door_chime.mp3" preload="auto"></audio>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to play the door chime -->
+    <script>
+        function playChime() {
+            const chime = document.getElementById('doorChime');
+            chime.currentTime = 0; // Reset to start
+            chime.play();
+        }
+    </script>
+</body>
+</html>
