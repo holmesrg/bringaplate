@@ -1,28 +1,337 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Bring A Plate - Idle Time</title>
-    <style>
-        canvas { background: #efefef; display: block; margin: 20px auto; border: 1px solid #ccc; border-radius: 5px;}
-        body, html {
-            height: 100%;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-weight: 400;
-            text-align: center;
-        }        
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bring A Plate — Plate Enterprises</title>
+  <meta name="description" content="Plate Enterprises creates products that connect people — Dorbel, FoneMe, and Direct Send.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'Coliner'; src: url('fonts/Coliner-ExtraBold.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+
+    :root {
+      --bap-navy: #243970;
+      --bap-mint: #31dfa5;
+      --dorbel-mint: #7BD3C0;
+      --dorbel-navy: #050546;
+      --fm-coral: #FF6B5B;
+      --fm-plum: #3B1E4E;
+      --fm-butter: #F8C56C;
+      --fm-cream: #FBF5EC;
+      --ds-ink: #1A0F4D;
+      --ds-cyan: #00FFC2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; line-height: 1.6; }
+
+    /* ── Navigation ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #fff;
+      border-bottom: 3px solid var(--bap-mint);
+      padding: 0 2.5rem;
+      height: 66px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(36,57,112,0.07);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo svg { height: 38px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-weight: 700; font-size: 0.84rem; text-decoration: none;
+      color: var(--bap-navy); letter-spacing: 0.07em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--bap-mint); }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; overflow: hidden;
+      background: var(--bap-navy);
+      min-height: 88vh;
+      display: flex; align-items: center;
+      padding: 5rem 2.5rem;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 640px;
+      margin-left: max(2rem, 8%);
+    }
+    .hero-label {
+      font-weight: 700; font-size: 0.77rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--bap-mint); margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'Coliner', 'Space Grotesk', 'Helvetica Neue', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 5.5vw, 4.6rem);
+      line-height: 1.07; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 1.25rem;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(255,255,255,0.72);
+      max-width: 500px; margin-bottom: 2.25rem; line-height: 1.75;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--bap-mint); color: var(--bap-navy);
+      font-weight: 800; font-size: 0.95rem;
+      padding: 0.82rem 1.9rem; border-radius: 100px;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(49,223,165,0.4); }
+    .hero-decor {
+      position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
+      width: clamp(300px, 42vw, 560px); opacity: 0.11; pointer-events: none;
+    }
+
+    /* ── Products ── */
+    .products { background: #f2f4fa; padding: 6rem 2.5rem; }
+    .products-inner { max-width: 1160px; margin: 0 auto; }
+    .section-label {
+      font-weight: 700; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--bap-mint); margin-bottom: 0.6rem;
+    }
+    .section-heading {
+      font-family: 'Coliner', 'Space Grotesk', 'Helvetica Neue', sans-serif;
+      font-weight: 800; font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+      letter-spacing: -0.025em; color: var(--bap-navy);
+      margin-bottom: 3rem; line-height: 1.18;
+    }
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 860px) {
+      .products-grid { grid-template-columns: 1fr; max-width: 460px; }
+    }
+
+    /* Card base */
+    .card {
+      border-radius: 22px; padding: 2.25rem 1.875rem;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card-accent { position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .card-logo { margin-bottom: 1.5rem; min-height: 64px; display: flex; align-items: center; }
+    .card-name {
+      font-family: 'Coliner', 'Space Grotesk', 'Helvetica Neue', sans-serif;
+      font-weight: 800; font-size: 1.75rem; letter-spacing: -0.03em;
+      margin-bottom: 0.7rem; line-height: 1.1;
+    }
+    .card-desc { font-size: 0.92rem; line-height: 1.7; flex: 1; margin-bottom: 1.75rem; }
+    .card-footer-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block; font-weight: 700; font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.9rem; border-radius: 100px;
+    }
+    .card-link {
+      font-weight: 700; font-size: 0.88rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.25em;
+      transition: gap 0.2s;
+    }
+    .card-link:hover { gap: 0.45em; }
+    .card-link.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+    /* Dorbel card */
+    .card-dorbel { background: linear-gradient(150deg, var(--dorbel-navy) 0%, #0c0c80 100%); box-shadow: 0 10px 36px rgba(5,5,70,0.38); }
+    .card-dorbel:hover { box-shadow: 0 18px 50px rgba(5,5,70,0.5); }
+    .card-dorbel .card-accent { background: var(--dorbel-mint); }
+    .card-dorbel .card-name { color: #fff; }
+    .card-dorbel .card-desc { color: rgba(255,255,255,0.72); }
+    .card-dorbel .badge { background: var(--dorbel-mint); color: var(--dorbel-navy); }
+    .card-dorbel .card-link { color: var(--dorbel-mint); }
+
+    /* FoneMe card */
+    .card-foneme { background: var(--fm-plum); box-shadow: 0 10px 36px rgba(59,30,78,0.38); }
+    .card-foneme:hover { box-shadow: 0 18px 50px rgba(59,30,78,0.5); }
+    .card-foneme .card-accent { background: var(--fm-coral); }
+    .card-foneme .card-name { color: var(--fm-cream); }
+    .card-foneme .card-desc { color: rgba(251,245,236,0.68); }
+    .card-foneme .badge { background: var(--fm-coral); color: #fff; }
+    .card-foneme .card-link { color: var(--fm-butter); }
+
+    /* Direct Send card */
+    .card-ds { background: var(--ds-ink); box-shadow: 0 10px 36px rgba(26,15,77,0.42); }
+    .card-ds:hover { box-shadow: 0 18px 50px rgba(26,15,77,0.58); }
+    .card-ds .card-accent { background: var(--ds-cyan); }
+    .card-ds .card-name { color: #fff; }
+    .card-ds .card-desc { color: rgba(255,255,255,0.62); }
+    .card-ds .badge { background: var(--ds-cyan); color: var(--ds-ink); }
+    .card-ds .card-link { color: var(--ds-cyan); }
+
+    /* ── Footer ── */
+    footer { background: var(--bap-navy); padding: 3.5rem 2rem; text-align: center; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; }
+    .footer-logo-mark { width: 40px; height: 40px; }
+    .footer-brand {
+      font-family: 'Coliner', 'Space Grotesk', sans-serif;
+      font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: #fff;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--bap-mint); opacity: 0.65; }
+
+    @media (max-width: 600px) {
+      .hero-content { margin-left: 0; text-align: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-decor { opacity: 0.06; right: -10%; }
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Bring A Plate</h1>
-        <p>The website never really got any traffic, so here's something to pass the time for you.</p>
-        <canvas id="gameCanvas" width="960" height="640"></canvas>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="/" class="nav-logo" aria-label="Bring A Plate home">
+    <!-- wide_logo.svg inlined -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 330.61" role="img" aria-label="Bring A Plate">
+      <title>Bring A Plate</title>
+      <defs><style>.n1{fill:#243970;}.n2{fill:#31dfa5;}</style></defs>
+      <path class="n1" d="M391,190.2v6.27c0,11.1-7.14,18.36-18.25,18.36H353.27v-77h18.48c11.1,0,18.25,7.26,18.25,18.36v4.07c0,6.93-2.75,11.88-7.8,14.74C387.8,177.66,391,182.83,391,190.2Zm-26.06-41.36v20.9h5.17c5.61,0,8.25-2.64,8.25-8.25V156c0-4.51-2.64-7.15-7.15-7.15ZM379.34,189c0-5.61-2.64-8.25-8.25-8.25h-6.16v23.09h7.26c4.51,0,7.15-2.64,7.15-7.15Z"/>
+      <path class="n1" d="M438.71,214.83l-8.47-31.78h-6.05v31.78H412.54v-77h18.25c11.11,0,18.26,7.26,18.26,18.36v8.47c0,7.15-3,12.65-8,15.73l9.79,34.42Zm-14.52-42.78h6.05c4.51,0,7.15-2.64,7.15-7.15V156c0-4.51-2.64-7.15-7.15-7.15h-6.05Z"/>
+      <path class="n1" d="M471.36,137.85H483v77H471.36Z"/>
+      <path class="n1" d="M506.77,137.85h12.86l14.85,51.69V137.85h11.44v77H533.6l-15.39-49.27v49.27H506.77Z"/>
+      <path class="n1" d="M594.4,161.82v-6.49c0-4.84-2.75-7.59-7-7.59s-7,2.75-7,7.59v42c0,4.83,2.75,7.58,7,7.58s7-2.75,7-7.58V183.71h-7v-11h18.7v24.64c0,11.1-7.48,18.58-18.7,18.58s-18.69-7.48-18.69-18.58v-42c0-11.1,7.48-18.58,18.69-18.58s18.7,7.48,18.7,18.58v6.49Z"/>
+      <path class="n1" d="M684.34,197.79H671.81l-2.54,17H657.62l12.75-77H686l12.76,77H686.87Zm-1.54-11.22-4.73-32.23-4.73,32.23Z"/>
+      <path class="n1" d="M751.74,137.85H770c11.1,0,18.25,7.26,18.25,18.36v9c0,11.11-7.15,18.37-18.25,18.37h-6.6v31.23H751.74Zm17.71,34.75c4.51,0,7.14-2.64,7.14-7.15V156c0-4.51-2.63-7.15-7.14-7.15H763.4V172.6Z"/>
+      <path class="n1" d="M809,137.85h11.65v66h20.79v11H809Z"/>
+      <path class="n1" d="M885.55,197.79H873l-2.53,17H858.83l12.76-77h15.62l12.75,77H888.09ZM884,186.57l-4.73-32.23-4.73,32.23Z"/>
+      <path class="n1" d="M911.61,137.85h37.17v11H936v66H924.37v-66H911.61Z"/>
+      <path class="n1" d="M968.79,137.85h33.1v11H980.44v21.45h17v11h-17v22.54h21.45v11h-33.1Z"/>
+      <path class="n1" d="M381.48,273.71v4.88h-29.4V235.28h28.86v4.88H357.57v14h20.32v4.57H357.57v14.95Z"/>
+      <path class="n1" d="M419.85,245.53v33.06h-5.49V235.28h4.27L445.46,269V235.34H451v43.25h-4.64Z"/>
+      <path class="n1" d="M517.93,240.16H503v38.43h-5.5V240.16H482.55v-4.88h35.38Z"/>
+      <path class="n1" d="M578.92,273.71v4.88h-29.4V235.28h28.86v4.88H555v14h20.32v4.57H555v14.95Z"/>
+      <path class="n1" d="M611.8,278.59V235.28h18.54a11.76,11.76,0,0,1,5.28,1.19,13.22,13.22,0,0,1,4.15,3.17,15.14,15.14,0,0,1,2.71,4.45,13.65,13.65,0,0,1,1,5,15.13,15.13,0,0,1-.64,4.36A13.7,13.7,0,0,1,641,257.3a12.1,12.1,0,0,1-2.87,2.93,11.36,11.36,0,0,1-3.75,1.77l10.49,16.59h-6.22L628.76,263H617.29v15.56Zm5.49-20.43h13.12a6.39,6.39,0,0,0,3.07-.74,7.21,7.21,0,0,0,2.35-2,9.44,9.44,0,0,0,1.53-2.9,10.82,10.82,0,0,0,.55-3.41,9.44,9.44,0,0,0-.64-3.45,10.3,10.3,0,0,0-1.71-2.87,7.74,7.74,0,0,0-2.5-1.95,6.89,6.89,0,0,0-3-.7H617.29Z"/>
+      <path class="n1" d="M677.25,278.59V235.28h18.06a11.75,11.75,0,0,1,5.27,1.19,13.22,13.22,0,0,1,4.15,3.17,15.14,15.14,0,0,1,2.71,4.45,13.65,13.65,0,0,1,1,5,14.69,14.69,0,0,1-.92,5.18,14.21,14.21,0,0,1-2.59,4.45,12.43,12.43,0,0,1-4,3.11,11.49,11.49,0,0,1-5.21,1.16H682.74v15.56Zm5.49-20.43h12.62a6.67,6.67,0,0,0,3.09-.71,6.74,6.74,0,0,0,2.34-1.95,9.44,9.44,0,0,0,1.53-2.9,10.74,10.74,0,0,0,.55-3.47,9.73,9.73,0,0,0-2.35-6.41,7.56,7.56,0,0,0-2.5-1.89,7,7,0,0,0-3-.67H682.74Z"/>
+      <path class="n1" d="M740.62,278.59V235.28h18.54a11.76,11.76,0,0,1,5.28,1.19,13.22,13.22,0,0,1,4.15,3.17,15.14,15.14,0,0,1,2.71,4.45,13.65,13.65,0,0,1,1,5,14.79,14.79,0,0,1-.64,4.36,13.7,13.7,0,0,1-1.83,3.81,12.1,12.1,0,0,1-2.87,2.93,11.36,11.36,0,0,1-3.75,1.77l10.49,16.59h-6.22L757.58,263H746.11v15.56Zm5.49-20.43h13.12a6.46,6.46,0,0,0,3.08-.74,7.42,7.42,0,0,0,2.35-2,9.42,9.42,0,0,0,1.52-2.9,10.55,10.55,0,0,0,.55-3.41,9.24,9.24,0,0,0-.64-3.45,10.3,10.3,0,0,0-1.71-2.87,7.74,7.74,0,0,0-2.5-1.95,6.89,6.89,0,0,0-3-.7H746.11Z"/>
+      <path class="n1" d="M806.07,278.59V235.28h5.49v43.31Z"/>
+      <path class="n1" d="M872.74,244.37a9.18,9.18,0,0,0-2-1.65,17.71,17.71,0,0,0-2.75-1.43,19.56,19.56,0,0,0-3.32-1,17.66,17.66,0,0,0-3.75-.39q-5.07,0-7.41,1.89a6.28,6.28,0,0,0-2.35,5.18,5.75,5.75,0,0,0,.67,2.93,5.45,5.45,0,0,0,2.1,2,16.33,16.33,0,0,0,3.57,1.44q2.13.6,5.06,1.28a51,51,0,0,1,6.07,1.67,18,18,0,0,1,4.64,2.35,9.58,9.58,0,0,1,2.93,3.42,11,11,0,0,1,1,4.94,11.38,11.38,0,0,1-1.22,5.4,10.88,10.88,0,0,1-3.32,3.78,14.17,14.17,0,0,1-5,2.19,26.11,26.11,0,0,1-6.23.71,28.65,28.65,0,0,1-9.48-1.56,26.41,26.41,0,0,1-8.14-4.55l2.62-4.63a14.4,14.4,0,0,0,2.53,2.07,19.64,19.64,0,0,0,3.54,1.86,26.35,26.35,0,0,0,4.27,1.35,21.91,21.91,0,0,0,4.79.52,13.28,13.28,0,0,0,7.2-1.65,6.07,6.07,0,0,0,1.73-8,6.92,6.92,0,0,0-2.41-2.17,18.28,18.28,0,0,0-3.93-1.61q-2.36-.7-5.34-1.44a53.41,53.41,0,0,1-5.79-1.71,15.9,15.9,0,0,1-4.18-2.19,8.32,8.32,0,0,1-2.53-3.11,10.34,10.34,0,0,1-.86-4.4,12.37,12.37,0,0,1,1.16-5.48,11.54,11.54,0,0,1,3.24-4,14,14,0,0,1,4.94-2.47,24.08,24.08,0,0,1,14.15.52,22.07,22.07,0,0,1,6.28,3.6Z"/>
+      <path class="n1" d="M939.22,273.71v4.88h-29.4V235.28h28.86v4.88H915.32v14h20.31v4.57H915.32v14.95Z"/>
+      <path class="n1" d="M997.54,244.37a9,9,0,0,0-2-1.65,17.59,17.59,0,0,0-2.74-1.43,19.68,19.68,0,0,0-3.33-1,17.66,17.66,0,0,0-3.75-.39q-5.06,0-7.41,1.89a6.31,6.31,0,0,0-2.35,5.18,5.75,5.75,0,0,0,.67,2.93,5.56,5.56,0,0,0,2.11,2,15.93,15.93,0,0,0,3.57,1.44q2.13.6,5.06,1.28a51,51,0,0,1,6.07,1.67,17.76,17.76,0,0,1,4.63,2.35A9.38,9.38,0,0,1,1001,262a11,11,0,0,1,1,4.94,11.38,11.38,0,0,1-1.22,5.4,10.8,10.8,0,0,1-3.33,3.78,14.17,14.17,0,0,1-5,2.19,26,26,0,0,1-6.22.71,28.65,28.65,0,0,1-9.48-1.56,26.46,26.46,0,0,1-8.15-4.55l2.63-4.63a14.4,14.4,0,0,0,2.53,2.07,19.88,19.88,0,0,0,3.53,1.86,26.79,26.79,0,0,0,4.28,1.35,21.88,21.88,0,0,0,4.78.52,13.28,13.28,0,0,0,7.2-1.65,6.1,6.1,0,0,0,1.74-8,6.92,6.92,0,0,0-2.41-2.17,18.17,18.17,0,0,0-3.94-1.61q-2.34-.7-5.33-1.44a53.63,53.63,0,0,1-5.8-1.71,15.67,15.67,0,0,1-4.17-2.19,8.34,8.34,0,0,1-2.54-3.11,10.34,10.34,0,0,1-.85-4.4,12.37,12.37,0,0,1,1.16-5.48,11.51,11.51,0,0,1,3.23-4,14.07,14.07,0,0,1,4.94-2.47,24.08,24.08,0,0,1,14.15.52,22,22,0,0,1,6.29,3.6Z"/>
+      <path class="n2" d="M149.57,38.06A123.37,123.37,0,0,0,26.18,161.45V284.84H62.63V160.09A86.7,86.7,0,0,1,92.46,96q3.15-2.76,6.56-5.19v70.69A50.5,50.5,0,1,0,135.41,113V75.79A86.9,86.9,0,1,1,99,232.24v52.6h50.55a123.39,123.39,0,0,0,0-246.78Z"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-label">Bring A Plate Enterprises</p>
+    <h1>Building connections<br>that matter.</h1>
+    <p class="hero-sub">We create products that connect people — from smart building intercoms to private calls and zero-knowledge file transfer. Built with care, shipped with purpose.</p>
+    <a href="#products" class="hero-cta">See our products ↓</a>
+  </div>
+
+  <!-- Decorative B mark (mint path from S1.svg) -->
+  <svg class="hero-decor" viewBox="95 55 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path fill="#31dfa5" d="M200.69,65.21a83.13,83.13,0,0,0-83.16,83.16v83.16h24.56V147.46a58.41,58.41,0,0,1,20.1-43.18c1.41-1.23,2.89-2.4,4.42-3.5v47.65a34,34,0,1,0,24.52-32.7V90.64a58.57,58.57,0,1,1-24.52,105.45v35.44h34.07a83.16,83.16,0,1,0,0-166.32Z"/>
+  </svg>
+</section>
+
+<!-- ── Products ── -->
+<section class="products" id="products">
+  <div class="products-inner">
+    <p class="section-label">Our Products</p>
+    <h2 class="section-heading">A suite built for<br>the modern internet.</h2>
+
+    <div class="products-grid">
+
+      <!-- Dorbel -->
+      <article class="card card-dorbel">
+        <div class="card-accent"></div>
+        <div class="card-logo">
+          <!-- Dorbel plainlogo.svg — paths adapted for dark background -->
+          <svg width="70" height="61" viewBox="0 0 49 43" xmlns="http://www.w3.org/2000/svg" aria-label="Dorbel">
+            <path d="M16.4257 0.134888L32.5796 0.270443C41.5012 0.345309 48.6729 7.63837 48.598 16.56C48.5232 25.4816 41.2301 32.6532 32.3085 32.5784L16.1546 32.4428L16.4257 0.134888Z" fill="#7BD3C0"/>
+            <path d="M16.4735 9.73178C7.54547 9.65686 0.211321 16.8687 0.136398 25.7971C0.061475 34.7255 7.27325 42.0594 16.2016 42.1343C25.13 42.2093 32.4639 34.9974 32.5388 26.069C32.6137 17.1406 25.4019 9.8067 16.4735 9.73178ZM16.4463 12.9733C23.625 13.0335 29.3606 18.8663 29.3004 26.0449C29.2402 33.2236 23.4074 38.9593 16.2288 38.8991C9.05019 38.8358 3.31453 33.003 3.37477 25.8243C3.43501 18.6455 9.26775 12.9099 16.4464 12.9702L16.4463 12.9733Z" fill="white" fill-opacity="0.18"/>
+            <path d="M16.3925 19.4524C12.8317 19.4225 9.8875 22.3177 9.85762 25.8785C9.82774 29.4393 12.723 32.3835 16.2837 32.4134C19.8445 32.4433 22.7887 29.5481 22.8186 25.9873C22.8485 22.4265 19.9532 19.4823 16.3925 19.4524Z" fill="#7BD3C0" fill-opacity="0.6"/>
+          </svg>
+        </div>
+        <h3 class="card-name">Dorbel</h3>
+        <p class="card-desc">Virtual doorbell and building intercom for modern apartments. Ring any unit, from anywhere.</p>
+        <div class="card-footer-row">
+          <span class="badge">Launching Soon</span>
+          <a href="https://dorbel.app" target="_blank" rel="noopener" class="card-link">Visit dorbel.app →</a>
+        </div>
+      </article>
+
+      <!-- FoneMe -->
+      <article class="card card-foneme">
+        <div class="card-accent"></div>
+        <div class="card-logo">
+          <!-- FoneMe mark extracted from foneme-figma-import.svg -->
+          <svg width="62" height="58" viewBox="4 6 56 54" xmlns="http://www.w3.org/2000/svg" aria-label="FoneMe">
+            <path d="M14 8h36a8 8 0 0 1 8 8v24a8 8 0 0 1-8 8H28l-10 10v-10h-4a8 8 0 0 1-8-8V16a8 8 0 0 1 8-8z" fill="#FF6B5B"/>
+            <rect x="19" y="22" width="6" height="14" rx="3" fill="#FBF5EC"/>
+            <rect x="29" y="16" width="6" height="26" rx="3" fill="#F8C56C"/>
+            <rect x="39" y="20" width="6" height="18" rx="3" fill="#FBF5EC"/>
+          </svg>
+        </div>
+        <h3 class="card-name">foneme<span style="color:var(--fm-coral)">.app</span></h3>
+        <p class="card-desc">Share a code, not a number — private calls and texts that don't reveal your phone.</p>
+        <div class="card-footer-row">
+          <span class="badge">Launching Soon</span>
+          <a href="#" class="card-link disabled">Coming soon →</a>
+        </div>
+      </article>
+
+      <!-- Direct Send -->
+      <article class="card card-ds">
+        <div class="card-accent"></div>
+        <div class="card-logo">
+          <!-- directsend-volt-mark.svg adapted for dark background (ink → white) -->
+          <svg width="132" height="57" viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg" aria-label="directsend">
+            <rect x="2" y="20" width="14" height="14" rx="3" fill="#fff"/>
+            <rect x="104" y="20" width="14" height="14" rx="3" fill="#00FFC2"/>
+            <rect x="22" y="22" width="20" height="10" rx="3" fill="#fff"/>
+            <rect x="48" y="24" width="14" height="6" rx="2" fill="#fff" opacity="0.5"/>
+            <rect x="78" y="22" width="20" height="10" rx="3" fill="#00FFC2"/>
+            <rect x="60" y="24" width="14" height="6" rx="2" fill="#00FFC2" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3 class="card-name">direct<span style="color:var(--ds-cyan)">send</span></h3>
+        <p class="card-desc">Zero-knowledge P2P file transfer with end-to-end encryption. No accounts, no servers, no limits.</p>
+        <div class="card-footer-row">
+          <span class="badge">Coming Soon</span>
+          <a href="#" class="card-link disabled">Learn more →</a>
+        </div>
+      </article>
+
     </div>
-    <script src="scripts/game.js"></script>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <!-- B mark from S1.svg (mint path, cropped viewBox) -->
+    <svg class="footer-logo-mark" viewBox="95 55 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#31dfa5" d="M200.69,65.21a83.13,83.13,0,0,0-83.16,83.16v83.16h24.56V147.46a58.41,58.41,0,0,1,20.1-43.18c1.41-1.23,2.89-2.4,4.42-3.5v47.65a34,34,0,1,0,24.52-32.7V90.64a58.57,58.57,0,1,1-24.52,105.45v35.44h34.07a83.16,83.16,0,1,0,0-166.32Z"/>
+    </svg>
+    <span class="footer-brand">Bring A Plate</span>
+    <p class="footer-copy">© 2026 Plate Enterprises Pty Ltd</p>
+  </div>
+</footer>
+
 </body>
 </html>
