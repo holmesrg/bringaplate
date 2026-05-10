@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a static HTML/CSS/JS website with no build system or package manager. Development is done by editing files directly and previewing in a browser.
 
+## Rules for Claude
+
+Never use emdashes - use colons or put context in brackets.
+
 ## Running Locally
 
 Open any HTML file directly in a browser, or serve with a local HTTP server (required for audio to work correctly in some browsers):
